@@ -89,9 +89,13 @@ var finances = [
 
 console.log("Financial Analysis:")
 
+// Identifying total number of months
+
 let MonthsNumber = finances.length;
 
 console.log("Total Months:" + MonthsNumber);
+
+// Identifying total Profit/Loss for the entire period
 
 let sum = 0;
 
@@ -101,37 +105,33 @@ for (let i = 0; i < finances.length; i++) {
 
 console.log("Total (Profit/Losses): " + sum);
 
+// Identifying Average of Profit/Losses changes/ per month
+
 var TotalAverage = 0;
-
-var difer = 0;
-
-for (let i=1; i<finances.length; i++) {
-   difer = finances[i][1] - finances[i-1][1];
-   TotalAverage = TotalAverage + difer;
-}
- 
-console.log("Average of Profit/Losses changes/ per month: " + (TotalAverage/85));
 
 let MonthlyChange = [];
 
 for (let i = 0; i < finances.length - 1; i++) {
-  let NextMonth = finances[i][1];
-  let NextButOne = finances[i + 1][1];
-  MonthlyChange.push(NextMonth - NextButOne);
+  let PrevMonth = finances[i][1];
+  let CurrentMonth = finances[i + 1][1];
+  MonthlyChange.push(CurrentMonth - PrevMonth);
+  TotalAverage = TotalAverage + (CurrentMonth - PrevMonth);
 }
 
-console.log(MonthlyChange);
+console.log("Average of Profit/Losses changes/ per month: " + (TotalAverage/(MonthsNumber-1)));
+
+// Identifying months with greatest increase and decrease in profits
 
 let GreatestIncrease = Math.max(...MonthlyChange);
 let GreatestDrop = Math.min(...MonthlyChange);
 
 let DateGI = MonthlyChange.indexOf(GreatestIncrease);
 let DateGD = MonthlyChange.indexOf(GreatestDrop);
-let NextGI = DateGD + 1;
-let 
+let NextGI = DateGI + 1;
+let NextGD = DateGD + 1;
 
-console.log("Biggest increase in profits happened from " + finances[DateGD][0] + "to" + finances[NextGI][0] + "and amounted to: " + GreatestIncrease);
-console.log("Biggest drop in profits happened in " + finances[DateGD][0] + "to" +  " and amounted to: " + GreatestDrop);
+console.log("Biggest increase in profits happened from " + finances[DateGI][0] + " to " + finances[NextGI][0] + " and amounted to: " + GreatestIncrease);
+console.log("Biggest drop in profits happened from " + finances[DateGD][0] + " to " + finances[NextGD][0] + " and amounted to: " + GreatestDrop);
 
 
  
